@@ -1,12 +1,18 @@
 const express = require('express')
 const app = express()
+const db = require('./db')
 
-var mysql = require('mysql')
-var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'house',
-  password: '2020',
-  database: 'my_db'
+app.get('/', (req, res) => {
+  const result = db.pool.query('select * from list')
+  res.send(result)
 })
 
-connection.connect()
+app.post('/', (req, res) => {
+  let text = req.body
+  const result = db.pool.query()
+  res.send(result)
+})
+
+app.listen('3000', () => {
+  console.log(`Servidor subiu  `)
+})
