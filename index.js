@@ -13,15 +13,21 @@ const db = require('./db')
 // insert into Name_of_database(name_of_table) values('Info');
 
 app.get('/', (req, res) => {
-  const result = db.pool.query('show databases;') // database no selected
-  res.send()
+  res.send('Ok ')
 })
 
-app.post('/', (req, res) => {
-  let text = req.body
-  res.send(text)
+app.post('/create', (req, res) => {
+  const [title, description] = req.body
+  // falta inserir os dados no banco de dados já criado
+
+  const InsertData = db.pool.query(
+    `insert into list (title, description) values (${title}, ${description})`
+  )
+  console.log(InsertData)
+  let response = [title, description]
+  res.send(response)
 })
 
 app.listen('3000', () => {
-  console.log(`Servidor subiu  `)
+  console.log(`Servidor subiu  na porta 3000`)
 })
