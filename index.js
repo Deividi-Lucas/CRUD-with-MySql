@@ -2,6 +2,8 @@ const express = require('express')
 const app = express()
 const db = require('./db')
 
+app.use(express.json())
+
 // Command in SQL
 
 // Create database name_of_database;
@@ -17,15 +19,21 @@ app.get('/', (req, res) => {
 })
 
 app.post('/create', (req, res) => {
-  const [title, description] = req.body
+  const { title, description } = req.body
   // falta inserir os dados no banco de dados já criado
-
+  const select = db.pool.query('use todo')
+  console.log(select)
   const InsertData = db.pool.query(
-    `insert into list (title, description) values (${title}, ${description})`
+    `use todo; insert into list (title, description) values (${title}, ${description});`
   )
   console.log(InsertData)
   let response = [title, description]
   res.send(response)
+})
+
+app.post('/test', (req, res) => {
+  const { title, description } = req.body
+  res.send('enviado')
 })
 
 app.listen('3000', () => {
