@@ -14,21 +14,25 @@ async function ShowDatabase() {
     // conexão no banco de dados
     conn = await pool.getConnection()
 
-    //    Criação de tabela banco de dados se não existe
+    //    Criação de  banco de dados se não existe
     const NameDefault = await conn.query('Create database if not exists ToDo')
     console.log(NameDefault)
 
     // Seleção do banco de dados
-    const useDatabase = await conn.query('use ToDo')
+    const useDatabase = await conn.query('use todo')
     console.log(useDatabase)
 
+    // Criação da Tabela
     const CreateTableData = await conn.query(
       'create table if not exists list (title varchar(255), description varchar(255))'
     )
     console.log(CreateTableData)
 
+    // Visualização de todos banco de dados
     const rows = await conn.query('show databases')
     console.log(rows)
+
+    // Visualização das tabelas
     const table = await conn.query('show tables')
     console.log(table)
   } catch (err) {
